@@ -1,6 +1,6 @@
 import Vapor
 import Leaf
-import FluentSQLite
+import FluentMySQL
 
 /// Called before your application initializes.
 public func configure(
@@ -18,13 +18,19 @@ public func configure(
     try services.register(leafProvider)
     config.prefer(LeafRenderer.self, for: ViewRenderer.self)
 
-    try services.register(FluentSQLiteProvider())
+    try services.register(FluentMySQLProvider())
 
-    var databases = DatabasesConfig()
-    try databases.add(database: SQLiteDatabase(storage: .memory), as: .sqlite)
-    services.register(databases)
+    let mysqlConfig = MySQLDatabaseConfig(
+      hostname: "127.0.0.1",
+      port: 3306,
+      username: "root",
+      password: "root",
+      database: "mycooldb"
+    )
+    services.register(mysqlConfig)
 
     var migrations = MigrationConfig()
-    migrations.add(model: User.self, database: .sqlite)
+    migrations.add(model: Acronym.self, database: .mysql)
+//    migrations.add(model: User.self, database: .mysql)
     services.register(migrations)
 }
