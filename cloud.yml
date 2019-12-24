@@ -2,4 +2,4 @@ type: "vapor"
 #2
 swift_version: "5.1.0"
 #3
-#run_parameters: "serve --port 8080 --hostname 0.0.0.0"
+run_parameters: "serve --port 8080 --hostname 0.0.0.0"
